@@ -10,6 +10,7 @@ from streamlit_folium import st_folium
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 GEO_DIR = os.path.join(BASE_DIR, "geo")
+ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 
 # CONFIG
 st.set_page_config(
@@ -52,7 +53,8 @@ orders_full = (
 orders_full['revenue'] = orders_full['price']
 
 # SIDEBAR
-st.sidebar.image("assets/logo.png", width=220)
+logo_path = os.path.join(ASSETS_DIR, "logo.png")
+st.sidebar.image(logo_path, width=220)
 min_date_allowed = pd.to_datetime("2016-01-01").date()
 max_date_allowed = pd.to_datetime("2018-12-31").date()
 
