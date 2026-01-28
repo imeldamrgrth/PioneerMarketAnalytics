@@ -1,9 +1,15 @@
 import streamlit as st
 import pandas as pd
+import os
 import json
 import folium
 import plotly.express as px
 from streamlit_folium import st_folium
+
+# PATH CONFIG
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+GEO_DIR = os.path.join(BASE_DIR, "geo")
 
 # CONFIG
 st.set_page_config(
@@ -15,10 +21,10 @@ st.title("Pioneer Market Analytics")
 # LOAD DATA
 @st.cache_data
 def load_data():
-    customers = pd.read_csv("data/customers_dataset.csv")
-    orders = pd.read_csv("data/orders_dataset.csv")
-    order_items = pd.read_csv("data/order_items_dataset.csv")
-    products = pd.read_csv("data/products_dataset.csv")
+    customers = pd.read_csv(os.path.join(DATA_DIR, "customers_dataset.csv"))
+    orders = pd.read_csv(os.path.join(DATA_DIR, "orders_dataset.csv"))
+    order_items = pd.read_csv(os.path.join(DATA_DIR, "order_items_dataset.csv"))
+    products = pd.read_csv(os.path.join(DATA_DIR, "products_dataset.csv"))
 
     orders['order_purchase_timestamp'] = pd.to_datetime(
         orders['order_purchase_timestamp']
@@ -29,7 +35,7 @@ def load_data():
 customers, orders, order_items, products = load_data()
 
 # LOAD GEOJSON
-with open("geo/br_states.geojson", "r", encoding="utf-8") as f:
+with open(os.path.join(GEO_DIR, "br_states.geojson"), encoding="utf-8") as f:
     brazil_geo = json.load(f)
 
 # DATA PREPARATION
